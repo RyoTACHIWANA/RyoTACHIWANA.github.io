@@ -33,7 +33,7 @@
 
   // 見開きごとの章名（しおり用）。見開きインデックスは Math.ceil(page/2)
   // ページ1は単独表紙、ページ最後も単独裏表紙
-  // 見開き構成（左,右）: [_,1表紙] [2見返し,3目次] [4装飾,5序] [6装飾,7作品] [8作品,9生い立ち] [10生い立ち,11興味] [12興味,13趣味] [14趣味,15書簡] [16書簡,17見返し] [18裏表紙,_]
+  // 見開き構成（左,右）: [_,1表紙] [2見返し,3目次] [4装飾,5序] [6装飾,7作品] [8作品,9生い立ち] [10生い立ち,11読書] [12読書,13興味] [14興味,15趣味] [16趣味,17書簡] [18書簡,19見返し] [20裏表紙,_]
   function chapterAtPage(page){
     if(page <= 1) return '表紙';
     if(page === 2 || page === 3) return '目次';
@@ -41,9 +41,10 @@
     if(page === 6 || page === 7) return '作品';
     if(page === 8) return '作品';
     if(page === 9 || page === 10) return '生い立ち';
-    if(page === 11 || page === 12) return '興味';
-    if(page === 13 || page === 14) return '趣味';
-    if(page === 15 || page === 16) return '書簡';
+    if(page === 11 || page === 12) return '読書と言葉';
+    if(page === 13 || page === 14) return '興味';
+    if(page === 15 || page === 16) return '趣味';
+    if(page === 17 || page === 18) return '書簡';
     return '裏表紙';
   }
 
@@ -94,12 +95,12 @@
   }
 
   function updateBookmark(page){
-    $('#bmLabel').text(chapterAtPage(page));
     // turn.js は見開きの左ページ番号を返すことがある。
     // 表紙(1)と裏表紙(最終)以外は、章タイトルのある右ページ番号を表示する。
-    var total = $('#flipbook > div').length;
+    var total = $('#flipbook').turn('pages') || $('#flipbook > div').length;
     var shown = page;
     if(page > 1 && page < total && page % 2 === 0){ shown = page + 1; }
+    $('#bmLabel').text(chapterAtPage(shown));
     $('#bmCur').text(shown);
   }
 
