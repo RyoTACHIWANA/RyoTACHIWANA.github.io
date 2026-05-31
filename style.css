@@ -450,6 +450,40 @@ body{
 .case-desc{font-family:var(--font-disp); font-size:12.5px; line-height:1.85; color:var(--ink-soft);}
 .case-tags{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;}
 .case-tags span{font-family:var(--font-type); font-size:9.5px; letter-spacing:0.12em; color:var(--ink-faint); border-bottom:1px dotted var(--ink-faint);}
+.case-card-feature{padding:15px 17px 14px; margin-bottom:12px;}
+.case-card-compact{padding:14px 16px; margin-bottom:12px;}
+.case-card-compact .case-title{font-size:15.5px; margin-top:7px;}
+.case-card-compact .case-desc{font-size:12px; line-height:1.75;}
+.case-points{list-style:none; margin:8px 0 0; padding:0; display:flex; flex-direction:column; gap:4px;}
+.case-points li{font-family:var(--font-disp); font-size:11.5px; line-height:1.6; color:var(--ink); padding-left:13px; position:relative;}
+.case-points li::before{content:""; position:absolute; left:0; top:0.72em; width:5px; height:5px; border-radius:50%; background:var(--accent);}
+.case-link{
+  display:inline-block;
+  margin-top:10px;
+  font-family:var(--font-type);
+  font-size:10px;
+  letter-spacing:0.18em;
+  color:var(--accent-deep);
+  text-decoration:none;
+  border-bottom:1px solid var(--accent);
+  padding-bottom:3px;
+}
+.case-link:hover{color:var(--ink-deep); border-color:var(--ink-deep);}
+.case-summary{
+  border-left:2px solid var(--accent);
+  padding:10px 0 10px 13px;
+  background:linear-gradient(90deg, rgba(168,82,58,0.08), rgba(168,82,58,0));
+}
+.case-summary span,.case-strengths span{
+  font-family:var(--font-type);
+  font-size:9px;
+  letter-spacing:0.22em;
+  color:var(--accent-deep);
+}
+.case-summary p{font-family:var(--font-disp); font-size:12px; line-height:1.7; color:var(--ink-soft); margin-top:4px;}
+.case-strengths{display:grid; grid-template-columns:1fr; gap:8px; margin-top:4px;}
+.case-strengths div{border-top:1px dotted var(--paper-edge); padding-top:8px;}
+.case-strengths p{font-family:var(--font-disp); font-size:11.5px; line-height:1.65; color:var(--ink-soft); margin-top:3px;}
 
 /* 年表 */
 .timeline{display:flex; flex-direction:column; gap:18px; margin-top:8px;}
@@ -457,11 +491,55 @@ body{
 .tl-year{font-family:var(--font-type); font-size:12px; letter-spacing:0.18em; color:var(--accent-deep); min-width:60px;}
 .tl-text{font-family:var(--font-disp); font-size:14px; line-height:1.8; color:var(--ink); flex:1;}
 
-/* 愛読書 */
+/* 興味 */
 .book-list{list-style:none; padding:0;}
 .book-list li{padding:14px 0; border-bottom:1px dotted var(--paper-edge); display:flex; flex-direction:column; gap:4px;}
 .bl-title{font-family:var(--font-disp); font-size:16px; color:var(--ink); letter-spacing:0.08em;}
 .bl-note{font-family:var(--font-disp); font-size:12px; color:var(--ink-soft); line-height:1.7;}
+
+/* 関心 */
+.dictionary-figure{
+  margin:0 0 12px;
+  border:1px solid var(--paper-edge);
+  background:rgba(255,250,235,0.45);
+  box-shadow:0 3px 12px rgba(120,90,55,0.12);
+  overflow:hidden;
+}
+.dictionary-figure img{display:block; width:100%; height:190px; object-fit:cover; object-position:center;}
+.dictionary-figure figcaption{
+  font-family:var(--font-disp);
+  font-size:11px;
+  line-height:1.6;
+  color:var(--ink-soft);
+  padding:8px 10px;
+}
+.interest-note{
+  border-top:1px dotted var(--paper-edge);
+  padding-top:10px;
+  margin-top:4px;
+}
+.interest-note span{
+  font-family:var(--font-type);
+  font-size:9px;
+  letter-spacing:0.24em;
+  color:var(--accent-deep);
+}
+.interest-note p{font-family:var(--font-disp); font-size:12px; line-height:1.75; color:var(--ink-soft); margin-top:4px;}
+.interest-list{display:flex; flex-direction:column; gap:9px;}
+.interest-card{
+  padding:11px 13px;
+  border-left:2px solid var(--accent);
+  background:linear-gradient(170deg, rgba(168,82,58,0.07), rgba(168,82,58,0));
+}
+.interest-card h3{
+  font-family:var(--font-disp);
+  font-weight:700;
+  font-size:14.5px;
+  color:var(--accent-deep);
+  letter-spacing:0.06em;
+  margin-bottom:4px;
+}
+.interest-card p{font-family:var(--font-disp); font-size:11.8px; line-height:1.65; color:var(--ink-soft);}
 
 /* 趣味 */
 .hobby-lead{font-size:13.5px; line-height:2; margin-bottom:10px;}
@@ -499,6 +577,29 @@ body{
   margin-bottom:6px;
 }
 .hobby-text{font-family:var(--font-disp); font-size:12.5px; line-height:1.75; color:var(--ink-soft);}
+.hobby-sub{
+  margin-top:13px;
+  padding-top:10px;
+  border-top:1px dotted var(--paper-edge);
+}
+.hobby-sub-title{
+  font-family:var(--font-type);
+  font-size:9px;
+  letter-spacing:0.24em;
+  color:var(--ink-faint);
+  margin-bottom:8px;
+}
+.hobby-tags{display:flex; flex-wrap:wrap; gap:7px;}
+.hobby-tags span{
+  font-family:var(--font-disp);
+  font-size:12px;
+  line-height:1;
+  color:var(--accent-deep);
+  border:1px solid var(--paper-edge);
+  background:rgba(255,250,235,0.38);
+  padding:6px 8px;
+}
+.hobby-sub p{font-family:var(--font-disp); font-size:11.8px; line-height:1.65; color:var(--ink-soft); margin-top:8px;}
 
 /* 時代 */
 .era-card{
