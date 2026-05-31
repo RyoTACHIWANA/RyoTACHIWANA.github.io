@@ -463,6 +463,43 @@ body{
 .bl-title{font-family:var(--font-disp); font-size:16px; color:var(--ink); letter-spacing:0.08em;}
 .bl-note{font-family:var(--font-disp); font-size:12px; color:var(--ink-soft); line-height:1.7;}
 
+/* 趣味 */
+.hobby-lead{font-size:13.5px; line-height:2; margin-bottom:10px;}
+.hobby-list{display:flex; flex-direction:column; gap:12px; margin-top:12px;}
+.hobby-list-right{margin-top:6px;}
+.hobby-card{
+  display:grid;
+  grid-template-columns:clamp(96px,34%,128px) 1fr;
+  min-height:118px;
+  background:linear-gradient(160deg, rgba(255,250,235,0.55), rgba(220,200,165,0.28));
+  border:1px solid var(--paper-edge);
+  box-shadow:0 3px 10px rgba(120,90,55,0.11);
+  overflow:hidden;
+}
+.hobby-photo{
+  width:100%; height:100%; min-height:118px;
+  object-fit:cover;
+  border-right:1px solid var(--paper-edge);
+  filter:sepia(0.12) contrast(0.95) saturate(0.9);
+}
+.hobby-body{padding:12px 14px 12px 15px;}
+.hobby-kicker{
+  font-family:var(--font-type);
+  font-size:9px;
+  letter-spacing:0.24em;
+  color:var(--ink-faint);
+  margin-bottom:4px;
+}
+.hobby-title{
+  font-family:var(--font-disp);
+  font-weight:700;
+  font-size:16px;
+  color:var(--accent-deep);
+  letter-spacing:0.08em;
+  margin-bottom:6px;
+}
+.hobby-text{font-family:var(--font-disp); font-size:12.5px; line-height:1.75; color:var(--ink-soft);}
+
 /* 時代 */
 .era-card{
   margin-bottom:18px; padding:16px 18px;
