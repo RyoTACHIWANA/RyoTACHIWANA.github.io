@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文豪探偵録 — 私的記録</title>
+<meta name="description" content="紙と活字の事件簿。文豪・歴史・小説をテーマにしたポートフォリオ。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- SVGフィルター定義：フィルムグレイン・革テクスチャ・インク滲み -->
+<svg width="0" height="0" class="svg-defs" aria-hidden="true">
+  <defs>
+    <filter id="filmgrain"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.14 0"/></filter>
+    <filter id="leathergrain"><feTurbulence type="fractalNoise" baseFrequency="0.04 0.9" numOctaves="3" stitchTiles="stitch" seed="5" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0.18  0 0 0 0 0.10  0 0 0 0 0.04  0 0 0 0.35 0"/></filter>
+    <filter id="leathercrack"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="11" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 -0.2"/></filter>
+    <!-- インクの滲み：ノイズで歪ませる -->
+    <filter id="inkbleed" x="-50%" y="-50%" width="200%" height="200%"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter>
+    <filter id="inkblob" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="0.4"/><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+  </defs>
+</svg>
+
+<!-- 右上：音と表示モードのコントロール -->
+<div class="hud" role="region" aria-label="設定">
+  <button id="soundToggle" class="hud-btn" aria-pressed="false" title="音 ON/OFF"><span class="hud-icon">♪</span><span id="soundLabel">音 OFF</span></button>
+  <button id="helpBtn" class="hud-btn" title="操作ヘルプ"><span class="hud-icon">?</span></button>
+</div>
+
+<!-- 操作ヘルプ -->
+<div id="helpPanel" class="help-panel" hidden>
+  <h3>頁のめくり方</h3>
+  <ul>
+    <li>本の<strong>右下／左下の角</strong>をドラッグで紙をめくる</li>
+    <li><strong>角をクリック</strong>でも一頁めくれる</li>
+    <li>キーボードの<strong>← →</strong>で前後に</li>
+    <li>左頁の<strong>目次</strong>から各章へ直接</li>
+  </ul>
+  <button class="help-close" id="helpClose">閉じる</button>
+</div>
+
+<!-- 書斎の背景：木目とランプの光だまり -->
+<div class="study" aria-hidden="true">
+  <div class="study-light"></div>
+  <div class="study-wood"></div>
+</div>
+
+<!-- 進行を示すしおり -->
+<div class="bookmark" id="bookmark" aria-hidden="true">
+  <span class="bm-label" id="bmLabel">序</span>
+  <span class="bm-page"><span id="bmCur">1</span> / <span id="bmTotal">14</span></span>
+</div>
+
+<!-- メインステージ -->
+<main class="stage">
+  <div id="flipbook" class="flipbook" aria-label="文豪探偵録の手帳">
+
+    <!-- 1. 表紙（革） -->
+    <div class="hard cover-front">
+      <div class="leather">
+        <div class="leather-noise"></div>
+        <div class="leather-cracks"></div>
+        <div class="leather-shine"></div>
+        <div class="cover-emboss">
+          <div class="cover-kicker">JOURNAL &middot; CASE FILE NO.003</div>
+          <h1 class="cover-title">文豪探偵録</h1>
+          <div class="cover-rule"></div>
+          <div class="cover-sub">— 紙と活字の事件簿 —</div>
+        </div>
+        <div class="cover-corner tl"></div><div class="cover-corner tr"></div>
+        <div class="cover-corner bl"></div><div class="cover-corner br"></div>
+        <div class="cover-spine"></div>
+        <div class="cover-hint pulse">▸ 表紙をひらく</div>
+      </div>
+    </div>
+
+    <!-- 2. 表紙裏（見返し） -->
+    <div class="hard endpaper"><div class="endpaper-inner"></div></div>
+
+    <!-- 3. 目次 -->
+    <div class="page paper" data-chapter="目次">
+      <div class="page-inner">
+        <div class="page-eyebrow">CONTENTS — 目次</div>
+        <h2 class="page-h2">目次</h2>
+        <nav class="toc">
+          <a class="toc-item" data-goto="5"><span class="n">I</span>序<span class="dots"></span><span class="pg">005</span></a>
+          <a class="toc-item" data-goto="7"><span class="n">II</span>作品<span class="dots"></span><span class="pg">007</span></a>
+          <a class="toc-item" data-goto="9"><span class="n">III</span>生い立ち<span class="dots"></span><span class="pg">009</span></a>
+          <a class="toc-item" data-goto="11"><span class="n">IV</span>愛読書<span class="dots"></span><span class="pg">011</span></a>
+          <a class="toc-item" data-goto="13"><span class="n">V</span>心惹かれる時代<span class="dots"></span><span class="pg">013</span></a>
+          <a class="toc-item" data-goto="15"><span class="n">VI</span>書簡<span class="dots"></span><span class="pg">015</span></a>
+        </nav>
+        <div class="page-folio">003</div>
+      </div>
+    </div>
+
+    <!-- 4. 目次の裏（飾り） -->
+    <div class="page paper">
+      <div class="page-inner">
+        <div class="frontispiece">
+          <div class="frontis-rule"></div>
+          <p class="epigraph">勘の鋭さよりも、<br>書き留める習慣を信じている。</p>
+          <div class="frontis-rule"></div>
+        </div>
+        <div class="page-folio">004</div>
+      </div>
+    </div>
+
+    <!-- 5. 序（左） -->
+    <div class="page paper" data-chapter="序">
+      <div class="page-inner">
+        <div class="ink-stamp">
+          <svg viewBox="0 0 240 80" class="ink-svg" aria-hidden="true">
+            <text x="120" y="50" text-anchor="middle" class="ink-text" filter="url(#inkbleed)">序</text>
+            <circle class="ink-drop" cx="60" cy="60" r="4"/>
+            <circle class="ink-drop" cx="195" cy="58" r="3"/>
+          </svg>
+        </div>
+        <div class="page-eyebrow">PREFACE</div>
+        <h2 class="page-h2"><span class="ink-target" data-ink="序">序</span></h2>
+        <p class="prose">ここは、読んだもの・調べたこと・手がけたものを綴る私的な記録。</p>
+        <p class="prose">頁をめくれば、事件簿のような作品の一覧、生い立ちと愛読書、心惹かれる時代についての手記が綴られている。</p>
+        <p class="prose">どうぞ、ゆっくりと——。</p>
+        <div class="page-folio">005</div>
+      </div>
+    </div>
+
+    <!-- 6. 序の続き / 装画 -->
+    <div class="page paper">
+      <div class="page-inner">
+        <div class="decoration">
+          <div class="deco-frame">
+            <div class="deco-mark">⌘</div>
+            <p class="deco-quote">「事実は、いつも書き留めた者の側にある」</p>
+          </div>
+        </div>
+        <div class="page-folio">006</div>
+      </div>
+    </div>
+
+    <!-- 7. 作品（左） -->
+    <div class="page paper" data-chapter="作品">
+      <div class="page-inner">
+        <div class="page-eyebrow">WORKS — 第一綴</div>
+        <h2 class="page-h2"><span class="ink-target" data-ink="作品">作品</span></h2>
+        <p class="prose-small">手がけたものを、事件簿のように。</p>
+        <article class="case-card">
+          <div class="case-no">CASE No.01</div><span class="case-stamp">CLOSED</span>
+          <h3 class="case-title">作品名をここに</h3>
+          <p class="case-desc">何を作ったか、役割、難しかったこと——具体的に。</p>
+          <div class="case-tags"><span>役割</span><span>技術</span><span>2025</span></div>
+        </article>
+        <article class="case-card">
+          <div class="case-no">CASE No.02</div><span class="case-stamp">CLOSED</span>
+          <h3 class="case-title">作品名をここに</h3>
+          <p class="case-desc">何を作ったか、役割、難しかったこと——具体的に。</p>
+          <div class="case-tags"><span>役割</span><span>技術</span><span>2024</span></div>
+        </article>
+        <div class="page-folio">007</div>
+      </div>
+    </div>
+
+    <!-- 8. 作品（右） -->
+    <div class="page paper">
+      <div class="page-inner">
+        <article class="case-card">
+          <div class="case-no">CASE No.03</div><span class="case-stamp open">OPEN</span>
+          <h3 class="case-title">進行中の一件</h3>
+          <p class="case-desc">いま手をつけている案件。目指す姿を書いておく。</p>
+          <div class="case-tags"><span>役割</span><span>技術</span><span>進行中</span></div>
+        </article>
+        <article class="case-card">
+          <div class="case-no">CASE No.04</div><span class="case-stamp">CLOSED</span>
+          <h3 class="case-title">作品名をここに</h3>
+          <p class="case-desc">何を作ったか、役割、難しかったこと——具体的に。</p>
+          <div class="case-tags"><span>役割</span><span>技術</span><span>2023</span></div>
+        </article>
+        <div class="page-folio">008</div>
+      </div>
+    </div>
+
+    <!-- 9. 生い立ち（左） -->
+    <div class="page paper" data-chapter="生い立ち">
+      <div class="page-inner">
+        <div class="page-eyebrow">BACKGROUND — 第二綴 第一章</div>
+        <h2 class="page-h2"><span class="ink-target" data-ink="生い立ち">生い立ち</span></h2>
+        <p class="prose">ここに経歴を綴る。</p>
+        <p class="prose">生まれ育った土地、学んだこと、いまの仕事に至るまでの道筋を、一行ずつ書き留めていく。</p>
+        <p class="prose">何に夢中になり、どこで道を選んだのか。</p>
+        <div class="page-folio">009</div>
+      </div>
+    </div>
+
+    <!-- 10. 生い立ち（右） -->
+    <div class="page paper">
+      <div class="page-inner">
+        <div class="timeline">
+          <div class="tl-item"><span class="tl-year">19XX</span><span class="tl-text">生まれる</span></div>
+          <div class="tl-item"><span class="tl-year">20XX</span><span class="tl-text">出会いと別れ、はじめての制作</span></div>
+          <div class="tl-item"><span class="tl-year">20XX</span><span class="tl-text">転機となる仕事</span></div>
+          <div class="tl-item"><span class="tl-year">いま</span><span class="tl-text">この記録を綴っている</span></div>
+        </div>
+        <div class="page-folio">010</div>
+      </div>
+    </div>
+
+    <!-- 11. 愛読書（左） -->
+    <div class="page paper" data-chapter="愛読書">
+      <div class="page-inner">
+        <div class="page-eyebrow">BOOKS — 第二綴 第二章</div>
+        <h2 class="page-h2"><span class="ink-target" data-ink="愛読書">愛読書</span></h2>
+        <p class="prose">幾度も読み返した本の名を、ここに記す。</p>
+        <div class="page-folio">011</div>
+      </div>
+    </div>
+
+    <!-- 12. 愛読書（右） -->
+    <div class="page paper">
+      <div class="page-inner">
+        <ul class="book-list">
+          <li><span class="bl-title">『　　　　』</span><span class="bl-note">惹かれた理由を一言。</span></li>
+          <li><span class="bl-title">『　　　　』</span><span class="bl-note">惹かれた理由を一言。</span></li>
+          <li><span class="bl-title">『　　　　』</span><span class="bl-note">惹かれた理由を一言。</span></li>
+          <li><span class="bl-title">『　　　　』</span><span class="bl-note">惹かれた理由を一言。</span></li>
+        </ul>
+        <div class="page-folio">012</div>
+      </div>
+    </div>
+
+    <!-- 13. 心惹かれる時代（左） -->
+    <div class="page paper" data-chapter="心惹かれる時代">
+      <div class="page-inner">
+        <div class="page-eyebrow">HISTORY — 第二綴 第三章</div>
+        <h2 class="page-h2"><span class="ink-target" data-ink="時代">心惹かれる時代</span></h2>
+        <p class="prose">心を捉えて離さない時代がある。</p>
+        <p class="prose">その時代のどこに、なぜ惹かれるのか——ここに思うままを書き残す。</p>
+        <div class="page-folio">013</div>
+      </div>
+    </div>
+
+    <!-- 14. 心惹かれる時代（右） -->
+    <div class="page paper">
+      <div class="page-inner">
+        <div class="era-card">
+          <div class="era-name">明治・大正</div>
+          <p class="era-text">活字と活版印刷、文豪たちの書簡——いまの仕事の手触りに、どこか似ている。</p>
+        </div>
+        <div class="era-card">
+          <div class="era-name">中世</div>
+          <p class="era-text">名もなき書記たちが残した、几帳面な記録の数々。</p>
+        </div>
+        <div class="page-folio">014</div>
+      </div>
+    </div>
+
+    <!-- 15. 書簡（左） -->
+    <div class="page paper" data-chapter="書簡">
+      <div class="page-inner">
+        <div class="page-eyebrow">CORRESPONDENCE</div>
+        <h2 class="page-h2"><span class="ink-target" data-ink="書簡">書簡</span></h2>
+        <p class="prose">この記録を読んでくださり、感謝いたします。</p>
+        <p class="prose">仕事のご依頼、感想、同じ本を愛する者としての便りでも——どうぞ気軽に。</p>
+        <p class="prose">返事は、必ず差し上げます。</p>
+        <div class="page-folio">015</div>
+      </div>
+    </div>
+
+    <!-- 16. 書簡の続き（連絡先） -->
+    <div class="page paper">
+      <div class="page-inner">
+        <div class="contact-block">
+          <div class="contact-date">2026年　某月　某日</div>
+          <div class="contact-sign">敬具　——　あなたの名前</div>
+          <div class="contact-links">
+            <a href="mailto:you@example.com">電子書簡（Email）</a>
+            <a href="https://github.com/">GitHub</a>
+            <a href="https://twitter.com/">X / Twitter</a>
+          </div>
+        </div>
+        <div class="page-folio">016</div>
+      </div>
+    </div>
+
+    <!-- 17. 裏見返し -->
+    <div class="hard endpaper"><div class="endpaper-inner"></div></div>
+
+    <!-- 18. 裏表紙 -->
+    <div class="hard cover-back">
+      <div class="leather">
+        <div class="leather-noise"></div>
+        <div class="leather-cracks"></div>
+        <div class="leather-shine"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- 全体に乗るグレイン -->
+<div class="grain-layer" aria-hidden="true"><div class="grain-fill"></div></div>
+
+<!-- スクリプト -->
+<script src="js/jquery.min.js"></script>
+<script src="js/turn.min.js"></script>
+<script src="audio-engine.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

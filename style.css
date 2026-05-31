@@ -1,0 +1,504 @@
+/* ============================================================
+   文豪探偵録 — Single Book Experience
+   革・紙・書斎・インクの滲み
+   ============================================================ */
+
+:root{
+  --paper-1:#f4ecd6;
+  --paper-2:#ece0c4;
+  --paper-3:#e3d4b2;
+  --paper-edge:#cbb88f;
+  --paper-shadow:rgba(120,90,55,0.18);
+  --ink:#3f3220;
+  --ink-soft:#6b5638;
+  --ink-faint:#9c8456;
+  --ink-ghost:#b09a6e;
+  --ink-deep:#2a1e10;
+  --leather-1:#4a2f1c;
+  --leather-2:#3a2414;
+  --leather-3:#2a1a0c;
+  --leather-hi:#7a5538;
+  --gold:#c9aa78;
+  --gold-bright:#e8c98a;
+  --gold-soft:#cbb088;
+  --accent:#a8523a;
+  --accent-deep:#7a3624;
+  --wood-1:#2e1f15;
+  --wood-2:#1a110a;
+  --font-disp:'Shippori Mincho','Yu Mincho','Hiragino Mincho ProN',serif;
+  --font-type:'Special Elite','Courier New',monospace;
+  --font-body:'Shippori Mincho','Yu Mincho','Hiragino Mincho ProN',serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  min-height:100vh;
+  overflow:hidden;
+  position:relative;
+  -webkit-font-smoothing:antialiased;
+  background:#0e0805;
+}
+.svg-defs{position:absolute;}
+
+/* ============================================================
+   書斎の背景：木目とランプの光だまり
+   ============================================================ */
+.study{position:fixed; inset:0; z-index:0; pointer-events:none;}
+.study-wood{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 50% 40%, #3a2818 0%, #1a1008 65%, #0a0604 100%),
+    repeating-linear-gradient(
+      88deg,
+      rgba(120,80,40,0.05) 0px,
+      rgba(120,80,40,0.05) 2px,
+      transparent 2px, transparent 7px
+    ),
+    repeating-linear-gradient(
+      92deg,
+      rgba(60,30,15,0.08) 0px,
+      rgba(60,30,15,0.08) 4px,
+      transparent 4px, transparent 13px
+    );
+}
+.study-light{
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 70% 55% at 50% 42%, rgba(255,210,140,0.22) 0%, rgba(255,200,130,0.10) 35%, transparent 70%);
+  mix-blend-mode:screen;
+  animation:lampFlicker 6s ease-in-out infinite;
+}
+@keyframes lampFlicker{
+  0%,100%{opacity:0.95}
+  50%{opacity:1}
+  73%{opacity:0.88}
+}
+
+/* ============================================================
+   グレイン
+   ============================================================ */
+.grain-layer{
+  position:fixed; inset:-40%; z-index:9000;
+  pointer-events:none; opacity:0.5; mix-blend-mode:multiply;
+  animation:grainShift 0.5s steps(4) infinite;
+}
+.grain-fill{width:100%; height:100%;}
+.grain-fill::before{
+  content:""; position:absolute; inset:0;
+  filter:url(#filmgrain);
+}
+@keyframes grainShift{
+  0%{transform:translate(0,0)} 33%{transform:translate(-3%,2%)}
+  66%{transform:translate(2%,-2%)} 100%{transform:translate(1%,-1%)}
+}
+
+/* ============================================================
+   HUD（音・ヘルプ）
+   ============================================================ */
+.hud{
+  position:fixed; top:18px; right:20px; z-index:8000;
+  display:flex; gap:10px;
+}
+.hud-btn{
+  background:rgba(20,12,6,0.7);
+  border:1px solid var(--gold-soft);
+  color:var(--gold-bright);
+  font-family:var(--font-type);
+  font-size:11px; letter-spacing:0.18em;
+  padding:8px 14px; cursor:pointer;
+  display:flex; align-items:center; gap:8px;
+  transition:background 0.2s, border-color 0.2s, color 0.2s;
+  backdrop-filter:blur(4px);
+}
+.hud-btn:hover{background:rgba(60,40,20,0.85); border-color:var(--gold-bright); color:#fff8e0;}
+.hud-btn[aria-pressed="true"]{background:rgba(168,82,58,0.4); border-color:var(--accent);}
+.hud-icon{font-size:14px;}
+
+.help-panel{
+  position:fixed; top:60px; right:20px; z-index:8000;
+  background:rgba(15,9,4,0.92);
+  border:1px solid var(--gold-soft);
+  color:var(--gold-bright);
+  padding:20px 24px; max-width:280px;
+  font-family:var(--font-disp); font-size:13px; line-height:1.9;
+  backdrop-filter:blur(6px);
+  box-shadow:0 10px 40px rgba(0,0,0,0.5);
+  animation:helpIn 0.3s ease;
+}
+@keyframes helpIn{from{opacity:0; transform:translateY(-8px);}to{opacity:1; transform:none;}}
+.help-panel h3{font-family:var(--font-disp); font-weight:500; font-size:14px; margin-bottom:10px; color:var(--gold-bright); letter-spacing:0.1em;}
+.help-panel ul{list-style:none; padding:0;}
+.help-panel li{padding:4px 0; border-bottom:1px dotted rgba(201,170,120,0.2);}
+.help-panel li:last-child{border:none;}
+.help-panel strong{color:#fff8e0; font-weight:500;}
+.help-close{
+  margin-top:14px; background:transparent; border:1px solid var(--gold-soft);
+  color:var(--gold-bright); padding:6px 14px; font-family:var(--font-type);
+  font-size:10px; letter-spacing:0.2em; cursor:pointer;
+  transition:background 0.2s;
+}
+.help-close:hover{background:rgba(60,40,20,0.5);}
+
+/* ============================================================
+   しおり（進行インジケータ）
+   ============================================================ */
+.bookmark{
+  position:fixed; left:20px; bottom:24px; z-index:8000;
+  font-family:var(--font-type); color:var(--gold-soft);
+  font-size:11px; letter-spacing:0.2em;
+  display:flex; flex-direction:column; gap:6px;
+  border-left:2px solid var(--gold-soft);
+  padding:10px 16px;
+  background:rgba(20,12,6,0.5);
+  backdrop-filter:blur(4px);
+}
+.bm-label{color:var(--gold-bright); font-family:var(--font-disp); font-size:14px; letter-spacing:0.1em;}
+.bm-page{color:var(--gold-soft); font-size:10px;}
+
+/* ============================================================
+   ステージ：本を画面の主役に
+   ============================================================ */
+.stage{
+  position:relative; z-index:10;
+  width:100vw; height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  padding:24px;
+}
+.flipbook{
+  /* turn.jsで使うので幅と高さはJSで設定する。基本値はここでフォールバック */
+  margin:0 auto;
+  box-shadow:0 30px 90px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.4);
+}
+
+/* ============================================================
+   革表紙：多層テクスチャ
+   ============================================================ */
+.hard{background:transparent;}
+.cover-front .leather, .cover-back .leather{
+  position:relative; width:100%; height:100%; overflow:hidden;
+  background:
+    radial-gradient(ellipse at 30% 20%, var(--leather-hi) 0%, var(--leather-1) 30%, var(--leather-2) 70%, var(--leather-3) 100%);
+  border-radius:2px 5px 5px 2px;
+  box-shadow:
+    inset 0 0 90px rgba(0,0,0,0.55),
+    inset 4px 0 12px rgba(0,0,0,0.5),
+    inset -2px 0 8px rgba(0,0,0,0.4);
+}
+.cover-back .leather{border-radius:5px 2px 2px 5px; box-shadow:inset 0 0 90px rgba(0,0,0,0.55), inset -4px 0 12px rgba(0,0,0,0.5);}
+.leather-noise{
+  position:absolute; inset:0; pointer-events:none;
+  filter:url(#leathergrain); opacity:0.85;
+  mix-blend-mode:overlay;
+}
+.leather-cracks{
+  position:absolute; inset:0; pointer-events:none;
+  filter:url(#leathercrack); opacity:0.4;
+  mix-blend-mode:multiply;
+}
+.leather-shine{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    linear-gradient(135deg, rgba(255,220,170,0.10) 0%, transparent 22%, transparent 100%),
+    radial-gradient(ellipse at 25% 18%, rgba(255,220,170,0.15) 0%, transparent 35%);
+  mix-blend-mode:screen;
+}
+.cover-spine{
+  position:absolute; left:0; top:0; bottom:0; width:18px;
+  background:
+    linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+  pointer-events:none;
+}
+.cover-back .cover-spine{display:none;}
+
+/* 表紙の金箔押し */
+.cover-emboss{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:0 8%;
+}
+.cover-emboss::before{
+  content:""; position:absolute; inset:9% 8%; pointer-events:none;
+  border:1.5px solid var(--gold);
+  border-radius:3px;
+  box-shadow:inset 0 0 30px rgba(0,0,0,0.3), 0 0 12px rgba(201,170,120,0.15);
+}
+.cover-emboss::after{
+  content:""; position:absolute; inset:11% 10%; pointer-events:none;
+  border:0.5px solid rgba(201,170,120,0.5);
+  border-radius:2px;
+}
+.cover-kicker{
+  font-family:var(--font-type);
+  font-size:11px; letter-spacing:0.4em;
+  color:var(--gold-soft); margin-bottom:24px;
+  text-shadow:0 1px 2px rgba(0,0,0,0.6);
+}
+.cover-title{
+  font-family:var(--font-disp); font-weight:700;
+  font-size:clamp(40px,7vw,84px);
+  color:var(--gold-bright);
+  letter-spacing:0.12em;
+  text-shadow:
+    0 0 1px rgba(0,0,0,0.8),
+    0 2px 3px rgba(0,0,0,0.7),
+    0 -1px 0 rgba(255,220,140,0.3);
+  filter:drop-shadow(0 0 8px rgba(201,170,120,0.2));
+}
+.cover-rule{width:90px; height:1.5px; background:var(--gold); margin:22px auto; box-shadow:0 1px 2px rgba(0,0,0,0.6);}
+.cover-sub{font-family:var(--font-type); font-size:13px; letter-spacing:0.34em; color:var(--gold-soft); text-shadow:0 1px 2px rgba(0,0,0,0.6);}
+
+.cover-corner{position:absolute; width:34px; height:34px; pointer-events:none;}
+.cover-corner.tl{top:7%; left:7%; border-top:1px solid var(--gold-soft); border-left:1px solid var(--gold-soft);}
+.cover-corner.tr{top:7%; right:7%; border-top:1px solid var(--gold-soft); border-right:1px solid var(--gold-soft);}
+.cover-corner.bl{bottom:7%; left:7%; border-bottom:1px solid var(--gold-soft); border-left:1px solid var(--gold-soft);}
+.cover-corner.br{bottom:7%; right:7%; border-bottom:1px solid var(--gold-soft); border-right:1px solid var(--gold-soft);}
+
+.cover-hint{
+  position:absolute; bottom:7%; left:0; right:0; text-align:center;
+  font-family:var(--font-type); font-size:11px; letter-spacing:0.3em;
+  color:var(--gold);
+}
+.pulse{animation:pulse 2.2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:0.9}50%{opacity:0.35}}
+
+/* ============================================================
+   見返し（表紙裏） — 大理石模様風
+   ============================================================ */
+.endpaper{background:transparent;}
+.endpaper-inner{
+  width:100%; height:100%;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(168,82,58,0.18) 0%, transparent 45%),
+    radial-gradient(ellipse at 70% 60%, rgba(60,40,20,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(120,90,55,0.12) 0%, transparent 50%),
+    linear-gradient(170deg, var(--paper-2), var(--paper-3));
+  position:relative;
+}
+.endpaper-inner::before{
+  content:""; position:absolute; inset:0;
+  filter:url(#leathergrain); opacity:0.3;
+  mix-blend-mode:multiply;
+}
+
+/* ============================================================
+   紙ページ
+   ============================================================ */
+.page.paper{
+  background:transparent;
+}
+.page-inner{
+  width:100%; height:100%; overflow:hidden;
+  padding:clamp(28px,4vw,52px) clamp(26px,4vw,48px);
+  background:linear-gradient(170deg, var(--paper-1) 0%, var(--paper-2) 60%, var(--paper-3) 100%);
+  position:relative;
+  box-shadow:inset 0 0 40px rgba(150,120,75,0.12);
+}
+.page-inner::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(168,82,58,0.08) 0px, transparent 28px),
+    radial-gradient(circle at 87% 73%, rgba(120,80,40,0.06) 0px, transparent 22px),
+    radial-gradient(circle at 35% 89%, rgba(150,100,55,0.05) 0px, transparent 18px);
+}
+
+/* 左ページは右側に綴じ目の影 */
+.flipbook .even .page-inner{
+  box-shadow:inset 0 0 40px rgba(150,120,75,0.12), inset -20px 0 30px rgba(120,90,55,0.18);
+}
+.flipbook .odd .page-inner{
+  box-shadow:inset 0 0 40px rgba(150,120,75,0.12), inset 20px 0 30px rgba(120,90,55,0.18);
+}
+
+.page-eyebrow{
+  font-family:var(--font-type);
+  font-size:10px; letter-spacing:0.34em;
+  color:var(--ink-faint); margin-bottom:14px;
+}
+.page-h2{
+  font-family:var(--font-disp); font-weight:700;
+  font-size:clamp(26px,3.6vw,38px);
+  color:var(--ink); letter-spacing:0.06em;
+  margin-bottom:24px; position:relative;
+}
+.page-folio{
+  position:absolute; bottom:18px; font-family:var(--font-type);
+  font-size:10px; color:var(--ink-ghost); letter-spacing:0.2em;
+}
+.flipbook .even .page-folio{left:clamp(26px,4vw,48px);}
+.flipbook .odd .page-folio{right:clamp(26px,4vw,48px);}
+
+/* ============================================================
+   インクの滲み：章タイトルが現れるとき
+   ============================================================ */
+.ink-stamp{display:none;}
+
+/* 章タイトル：spanで文字部分をラップし、文字の真上に滴が落ちる */
+.ink-target{position:relative; display:inline-block; overflow:visible;}
+
+/* 上から落ちてくるインクの滴 */
+.ink-target::before{
+  content:""; position:absolute;
+  left:50%; top:-44px;
+  width:14px; height:14px;
+  background:radial-gradient(circle at 35% 35%, #6b2818 0%, #4a1810 60%, #2a0a06 100%);
+  border-radius:50%;
+  transform:translateX(-50%) scale(0);
+  opacity:0;
+  pointer-events:none;
+  filter:url(#inkblob);
+}
+
+/* じゅわっと広がるインク溜まり */
+.ink-target::after{
+  content:""; position:absolute;
+  left:50%; top:-8px;
+  width:60px; height:18px;
+  background:radial-gradient(ellipse at center, rgba(74,24,16,0.85) 0%, rgba(74,24,16,0.4) 50%, transparent 80%);
+  border-radius:50%;
+  transform:translateX(-50%) scale(0,0.4);
+  opacity:0;
+  pointer-events:none;
+  filter:url(#inkblob);
+}
+
+.ink-target.bleed::before{
+  animation:inkDropFall 1.5s cubic-bezier(0.4,0.05,0.55,0.95) forwards;
+}
+@keyframes inkDropFall{
+  0%   { transform:translateX(-50%) translateY(-30px) scale(0.3); opacity:0; }
+  25%  { transform:translateX(-50%) translateY(-20px) scale(0.9); opacity:0.95; }
+  /* ボタッと着地 */
+  45%  { transform:translateX(-50%) translateY(8px) scale(1.4,0.6); opacity:1; }
+  60%  { transform:translateX(-50%) translateY(6px) scale(2.2,0.8); opacity:0.85; }
+  /* じゅわっと滲んで消える */
+  100% { transform:translateX(-50%) translateY(10px) scale(8,3); opacity:0; }
+}
+
+.ink-target.bleed::after{
+  animation:inkSpread 1.6s 0.4s cubic-bezier(0.2,0.7,0.3,1) forwards;
+}
+@keyframes inkSpread{
+  0%   { transform:translateX(-50%) scale(0,0.4); opacity:0; }
+  20%  { transform:translateX(-50%) scale(0.6,0.6); opacity:0.95; }
+  /* 紙に染み込んで広がる */
+  60%  { transform:translateX(-50%) scale(2.6,1.4); opacity:0.55; }
+  100% { transform:translateX(-50%) scale(4.5,2.2); opacity:0; }
+}
+
+/* タイトル文字自体：最初は滲んで、徐々に乾いてくっきりする */
+.ink-target{
+  color:var(--ink);
+  transition:none;
+}
+.ink-target.bleed{
+  animation:inkSink 1.6s 0.35s ease-out forwards;
+}
+@keyframes inkSink{
+  0%   { filter:url(#inkbleed) blur(0.6px); color:#4a1810; }
+  40%  { filter:url(#inkbleed) blur(0.3px); color:#3a1208; }
+  100% { filter:none; color:var(--ink); }
+}
+
+/* ============================================================
+   本文と各章のレイアウト
+   ============================================================ */
+.prose{font-family:var(--font-disp); font-size:14px; line-height:2.2; color:var(--ink); margin-bottom:12px;}
+.prose-small{font-family:var(--font-disp); font-size:13px; line-height:2; color:var(--ink-soft); margin-bottom:18px;}
+
+/* 目次 */
+.toc{display:flex; flex-direction:column; margin-top:6px;}
+.toc-item{
+  font-family:var(--font-disp); font-size:15px; color:var(--ink-soft);
+  text-decoration:none; padding:11px 0; border-bottom:1px dotted var(--paper-edge);
+  display:flex; align-items:baseline; cursor:pointer;
+  transition:color 0.2s, padding-left 0.2s; letter-spacing:0.06em;
+}
+.toc-item:hover{color:var(--ink); padding-left:6px;}
+.toc-item .n{font-family:var(--font-type); font-size:10px; color:var(--ink-faint); letter-spacing:0.2em; margin-right:10px; min-width:24px;}
+.toc-item .dots{flex:1; border-bottom:1px dotted var(--ink-ghost); margin:0 10px; position:relative; top:-4px;}
+.toc-item .pg{font-family:var(--font-type); font-size:10px; color:var(--ink-faint); letter-spacing:0.18em;}
+
+/* 装飾ページ */
+.frontispiece{display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:22px;}
+.frontis-rule{width:80px; height:1px; background:var(--ink-faint);}
+.epigraph{font-family:var(--font-disp); font-size:16px; line-height:2.4; color:var(--ink); text-align:center; letter-spacing:0.08em;}
+
+.decoration{display:flex; align-items:center; justify-content:center; height:100%;}
+.deco-frame{border:1px solid var(--ink-faint); padding:38px 30px; text-align:center; max-width:90%;}
+.deco-mark{font-size:28px; color:var(--accent-deep); margin-bottom:16px; opacity:0.6;}
+.deco-quote{font-family:var(--font-disp); font-size:15px; line-height:2.2; color:var(--ink); letter-spacing:0.08em;}
+
+/* 作品カード */
+.case-card{
+  background:linear-gradient(160deg, rgba(255,250,235,0.5), rgba(220,200,165,0.3));
+  border:1px solid var(--paper-edge);
+  padding:16px 18px; margin-bottom:16px;
+  position:relative;
+  box-shadow:0 2px 8px rgba(150,120,75,0.08);
+}
+.case-no{font-family:var(--font-type); font-size:10px; letter-spacing:0.3em; color:var(--ink-faint);}
+.case-stamp{
+  position:absolute; top:14px; right:16px;
+  font-family:var(--font-type); font-size:9px; letter-spacing:0.2em;
+  color:var(--accent); border:1px solid var(--accent);
+  padding:2px 7px; transform:rotate(5deg); opacity:0.75;
+}
+.case-stamp.open{color:#2a6e3a; border-color:#2a6e3a;}
+.case-title{font-family:var(--font-disp); font-weight:700; font-size:17px; color:var(--ink); margin:8px 0 6px; letter-spacing:0.04em;}
+.case-desc{font-family:var(--font-disp); font-size:12.5px; line-height:1.85; color:var(--ink-soft);}
+.case-tags{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;}
+.case-tags span{font-family:var(--font-type); font-size:9.5px; letter-spacing:0.12em; color:var(--ink-faint); border-bottom:1px dotted var(--ink-faint);}
+
+/* 年表 */
+.timeline{display:flex; flex-direction:column; gap:18px; margin-top:8px;}
+.tl-item{display:flex; align-items:baseline; gap:18px; padding-bottom:12px; border-bottom:1px dotted var(--paper-edge);}
+.tl-year{font-family:var(--font-type); font-size:12px; letter-spacing:0.18em; color:var(--accent-deep); min-width:60px;}
+.tl-text{font-family:var(--font-disp); font-size:14px; line-height:1.8; color:var(--ink); flex:1;}
+
+/* 愛読書 */
+.book-list{list-style:none; padding:0;}
+.book-list li{padding:14px 0; border-bottom:1px dotted var(--paper-edge); display:flex; flex-direction:column; gap:4px;}
+.bl-title{font-family:var(--font-disp); font-size:16px; color:var(--ink); letter-spacing:0.08em;}
+.bl-note{font-family:var(--font-disp); font-size:12px; color:var(--ink-soft); line-height:1.7;}
+
+/* 時代 */
+.era-card{
+  margin-bottom:18px; padding:16px 18px;
+  background:linear-gradient(170deg, rgba(168,82,58,0.06), rgba(168,82,58,0));
+  border-left:2px solid var(--accent);
+}
+.era-name{font-family:var(--font-disp); font-weight:700; font-size:16px; color:var(--accent-deep); margin-bottom:8px; letter-spacing:0.1em;}
+.era-text{font-family:var(--font-disp); font-size:13px; line-height:1.95; color:var(--ink-soft);}
+
+/* 書簡 */
+.contact-block{display:flex; flex-direction:column; gap:20px; height:100%; justify-content:center;}
+.contact-date{font-family:var(--font-type); font-size:11px; letter-spacing:0.26em; color:var(--ink-faint); text-align:right;}
+.contact-sign{font-family:var(--font-disp); font-size:14px; color:var(--ink); text-align:right; letter-spacing:0.08em;}
+.contact-links{display:flex; flex-direction:column; gap:10px; margin-top:14px;}
+.contact-links a{
+  font-family:var(--font-type); font-size:12px; letter-spacing:0.18em;
+  color:var(--ink-soft); text-decoration:none;
+  border-bottom:1px solid var(--paper-edge); padding:8px 0;
+  transition:color 0.2s, border-color 0.2s;
+}
+.contact-links a:hover{color:var(--accent); border-color:var(--accent);}
+
+/* ============================================================
+   モーション軽減
+   ============================================================ */
+@media(prefers-reduced-motion:reduce){
+  .grain-layer,.pulse,.study-light{animation:none;}
+  .ink-target.bleed{animation:none;}
+  .ink-target.bleed::before{animation:none; opacity:0;}
+}
+
+/* ============================================================
+   小さい画面：本を縦長に
+   ============================================================ */
+@media (max-width:780px){
+  .bookmark{font-size:10px; padding:8px 10px;}
+  .hud{top:12px; right:12px;}
+  .help-panel{right:12px; max-width:calc(100vw - 24px);}
+}
