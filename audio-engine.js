@@ -10,6 +10,9 @@
   var buffers = {};        // 読み込み済みMP3
   var available = {};      // MP3 が用意されているか
   var SOUNDS = ['page-turn','cover-open','ink-drop','stamp'];
+  var BUFFER_GAINS = {
+    'page-turn': 0.5
+  };
 
   function ensureCtx(){
     if(ctx) return ctx;
@@ -153,7 +156,7 @@
     if(!ensureCtx()) return;
     // 自動再生制限への対応
     if(ctx.state === 'suspended') ctx.resume();
-    if(!playBuffer(name)){
+    if(!playBuffer(name, BUFFER_GAINS[name])){
       var fn = SYNTHS[name];
       if(fn) try{ fn(); }catch(e){}
     }
