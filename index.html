@@ -3,14 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ryo TACHIWANA — NLP Portfolio</title>
-<meta name="description" content="日本語NLP、災害体験談コーパス、心理状態推定、LLM/RAG応用に取り組むポートフォリオ。">
+<title>Ryo TACHIWANA — Japanese NLP / Disaster Testimony Portfolio</title>
+<meta name="description" content="立和名遼のNLP/機械学習ポートフォリオ。日本語災害証言コーパス、後悔・反実仮想表現の抽出、SNS投稿分析、LLM/RAG構想を掲載。">
+<link rel="canonical" href="https://RyoTACHIWANA.github.io/bungou_portfolio_github_pages_ready/">
+<meta name="theme-color" content="#3a2414">
+<meta property="og:title" content="Ryo TACHIWANA — Japanese NLP Portfolio">
+<meta property="og:description" content="日本語NLP、災害証言分析、後悔・反実仮想抽出、SNS投稿分析に取り組む研究ポートフォリオ。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://RyoTACHIWANA.github.io/bungou_portfolio_github_pages_ready/">
+<meta property="og:image" content="https://RyoTACHIWANA.github.io/bungou_portfolio_github_pages_ready/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ryo TACHIWANA — Japanese NLP Portfolio">
+<meta name="twitter:description" content="災害証言606件・12,250文を対象に、日本語NLPで教訓の言語的痕跡を扱うポートフォリオ。">
+<meta name="twitter:image" content="https://RyoTACHIWANA.github.io/bungou_portfolio_github_pages_ready/assets/og-cover.jpg">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>document.documentElement.classList.add(new URLSearchParams(location.search).get('view') === 'linear' ? 'linear-intent' : 'book-intent');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Special+Elite&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Special+Elite&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Ryo TACHIWANA",
+  "alternateName": "立和名遼",
+  "url": "https://RyoTACHIWANA.github.io/bungou_portfolio_github_pages_ready/",
+  "email": "mailto:tachiwanariyo@gmail.com",
+  "sameAs": [
+    "https://github.com/RyoTACHIWANA/"
+  ],
+  "knowsAbout": [
+    "Japanese NLP",
+    "Disaster testimony analysis",
+    "Counterfactual and regret expression extraction",
+    "Data preprocessing",
+    "Visualization",
+    "LLM/RAG design"
+  ]
+}
+</script>
 </head>
 <body>
+<header class="skip-region">
+  <a class="skip-link" href="#main">本文へ進む</a>
+</header>
 
 <!-- SVGフィルター定義：フィルムグレイン・革テクスチャ・インク滲み -->
 <svg width="0" height="0" class="svg-defs" aria-hidden="true">
@@ -18,23 +58,26 @@
     <filter id="filmgrain"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.14 0"/></filter>
     <filter id="leathergrain"><feTurbulence type="fractalNoise" baseFrequency="0.04 0.9" numOctaves="3" stitchTiles="stitch" seed="5" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0.18  0 0 0 0 0.10  0 0 0 0 0.04  0 0 0 0.35 0"/></filter>
     <filter id="leathercrack"><feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="2" seed="11" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 -0.2"/></filter>
-    <!-- インクの滲み：ノイズで歪ませる -->
     <filter id="inkbleed" x="-50%" y="-50%" width="200%" height="200%"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G"/></filter>
     <filter id="inkblob" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="0.4"/><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
   </defs>
 </svg>
 
-<!-- 右上：音と表示モードのコントロール -->
+<!-- 右上：音・ヘルプ・速読 -->
 <div class="hud" role="region" aria-label="設定">
-  <button id="soundToggle" class="hud-btn" aria-pressed="false" title="音 ON/OFF"><span class="hud-icon">♪</span><span id="soundLabel">音 OFF</span></button>
-  <button id="helpBtn" class="hud-btn" title="操作ヘルプ"><span class="hud-icon">?</span></button>
+  <button id="soundToggle" class="hud-btn book-only" aria-pressed="false" title="音 ON/OFF"><span class="hud-icon">♪</span><span id="soundLabel">音 OFF</span></button>
+  <button id="helpBtn" class="hud-btn book-only" title="操作ヘルプ"><span class="hud-icon">?</span></button>
+  <a id="linearLink" class="hud-btn book-only" href="?view=linear#works">速読</a>
+  <a id="bookLink" class="hud-btn linear-only" href="./">手帳</a>
 </div>
 
 <!-- 操作ヘルプ -->
 <div id="helpPanel" class="help-panel" hidden>
-  <h3>頁のめくり方</h3>
+  <h2>頁のめくり方</h2>
   <ul>
     <li>キーボードの<strong>← →</strong>で紙をめくる</li>
+    <li>目次から各章へ移動する</li>
+    <li>速読では縦スクロールで読む</li>
   </ul>
   <button class="help-close" id="helpClose">閉じる</button>
 </div>
@@ -48,11 +91,11 @@
 <!-- 進行を示すしおり -->
 <div class="bookmark" id="bookmark" aria-hidden="true">
   <span class="bm-label" id="bmLabel">序</span>
-  <span class="bm-page"><span id="bmCur">1</span> / <span id="bmTotal">20</span></span>
+  <span class="bm-page"><span id="bmCur">1</span> / <span id="bmTotal">22</span></span>
 </div>
 
-<!-- メインステージ -->
-<main class="stage">
+<main id="main" class="stage" tabindex="-1">
+  <h1 class="sr-only">立和名遼 NLPポートフォリオ</h1>
   <div id="flipbook" class="flipbook" aria-label="文豪探偵録の手帳">
 
     <!-- 1. 表紙（革） -->
@@ -62,10 +105,10 @@
         <div class="leather-cracks"></div>
         <div class="leather-shine"></div>
         <div class="cover-emboss">
-          <div class="cover-kicker">NLP &middot; RESEARCH PORTFOLIO</div>
+          <div class="cover-kicker">JAPANESE NLP &middot; RESEARCH PORTFOLIO</div>
           <h1 class="cover-title">立和名遼　人生編纂</h1>
           <div class="cover-rule"></div>
-          <div class="cover-sub">— 学び、作り、問い続ける —</div>
+          <div class="cover-sub">災害証言を、測れる言葉へ。</div>
         </div>
         <div class="cover-corner tl"></div><div class="cover-corner tr"></div>
         <div class="cover-corner bl"></div><div class="cover-corner br"></div>
@@ -82,25 +125,31 @@
       <div class="page-inner">
         <div class="page-eyebrow">CONTENTS — 目次</div>
         <h2 class="page-h2">目次</h2>
-        <nav class="toc">
-          <a class="toc-item" data-goto="5"><span class="n">I</span>序<span class="dots"></span><span class="pg">005</span></a>
-          <a class="toc-item" data-goto="7"><span class="n">II</span>作品<span class="dots"></span><span class="pg">007</span></a>
-          <a class="toc-item" data-goto="9"><span class="n">III</span>生い立ち<span class="dots"></span><span class="pg">009</span></a>
-          <a class="toc-item" data-goto="11"><span class="n">IV</span>読書と言葉<span class="dots"></span><span class="pg">011</span></a>
-          <a class="toc-item" data-goto="13"><span class="n">V</span>興味のある分野<span class="dots"></span><span class="pg">013</span></a>
-          <a class="toc-item" data-goto="15"><span class="n">VI</span>趣味<span class="dots"></span><span class="pg">015</span></a>
-          <a class="toc-item" data-goto="17"><span class="n">VII</span>書簡<span class="dots"></span><span class="pg">017</span></a>
+        <nav class="toc" aria-label="章目次">
+          <a class="toc-item" href="#preface" data-goto="5"><span class="n">I</span>序<span class="dots"></span><span class="pg">005</span></a>
+          <a class="toc-item" href="#works" data-goto="7"><span class="n">II</span>作品<span class="dots"></span><span class="pg">007</span></a>
+          <a class="toc-item" href="#background" data-goto="9"><span class="n">III</span>生い立ち<span class="dots"></span><span class="pg">009</span></a>
+          <a class="toc-item" href="#reading" data-goto="11"><span class="n">IV</span>読書と言葉<span class="dots"></span><span class="pg">011</span></a>
+          <a class="toc-item" href="#interests" data-goto="13"><span class="n">V</span>興味のある分野<span class="dots"></span><span class="pg">013</span></a>
+          <a class="toc-item" href="#skills" data-goto="15"><span class="n">VI</span>Skills<span class="dots"></span><span class="pg">015</span></a>
+          <a class="toc-item" href="#hobbies" data-goto="17"><span class="n">VII</span>趣味<span class="dots"></span><span class="pg">017</span></a>
+          <a class="toc-item" href="#contact" data-goto="19"><span class="n">VIII</span>書簡<span class="dots"></span><span class="pg">019</span></a>
         </nav>
+        <div class="quick-route">
+          <span>FAST PATH</span>
+          <a href="?view=linear#case-03">代表研究へ</a>
+          <a href="?view=linear#skills">技術を見る</a>
+        </div>
         <div class="page-folio">003</div>
       </div>
     </div>
 
     <!-- 4. 目次の裏（飾り） -->
-    <div class="page paper">
+    <div class="page paper decorative-page">
       <div class="page-inner">
         <div class="frontispiece">
           <div class="frontis-rule"></div>
-          <p class="epigraph">座右の銘<br>Every day, in every way, <br>I'm getting better and better <br>（私は毎日、あらゆる面で、<br>ますますよくなっている）-Émile Coué-</p>
+          <p class="epigraph">Every day, in every way,<br>I'm getting better and better.<br><span>— Emile Coue</span></p>
           <div class="frontis-rule"></div>
         </div>
         <div class="page-folio">004</div>
@@ -108,26 +157,22 @@
     </div>
 
     <!-- 5. 序（左） -->
-    <div class="page paper" data-chapter="序">
+    <section id="preface" class="page paper" data-chapter="序">
       <div class="page-inner">
-        <div class="ink-stamp">
-          <svg viewBox="0 0 240 80" class="ink-svg" aria-hidden="true">
-            <text x="120" y="50" text-anchor="middle" class="ink-text" filter="url(#inkbleed)">序</text>
-            <circle class="ink-drop" cx="60" cy="60" r="4"/>
-            <circle class="ink-drop" cx="195" cy="58" r="3"/>
-          </svg>
-        </div>
         <div class="page-eyebrow">PREFACE</div>
         <h2 class="page-h2"><span class="ink-target" data-ink="序">序</span></h2>
-        <p class="prose">香川大学の情報工学系安藤研究室（主領域：NLP）で、日本語の災害体験談を対象にしたデータ構築・分析に取り組んでいます。</p>
-        <p class="prose">関心領域は、災害発生直後から避難・混乱期における心理状態、状況認知、認知バイアスの推定です。</p>
-        <p class="prose">Pythonによる収集・前処理・構造化を進めており、LLM/RAGを用いた支援対話システムの基盤づくりを行いたいと考えています。</p>
+        <p class="prose">香川大学の情報工学系安藤研究室（主領域：NLP）で、日本語の災害証言を対象にしたデータ構築・分析に取り組んでいます。</p>
+        <p class="prose">関心領域は、災害時の認知・判断・後悔・教訓が、どのような言葉として記録に残るのかを計算的に扱うことです。</p>
+        <p class="prose">Pythonによる前処理、正規表現ベースの抽出、検証設計、可視化を軸に、将来的なLLM/RAG支援対話の基盤づくりへ接続しています。</p>
+        <div class="identity-strip" aria-label="技術的アイデンティティ">
+          <span>Japanese NLP</span><span>Disaster Testimony</span><span>Counterfactuals</span><span>Evaluation Design</span>
+        </div>
         <div class="page-folio">005</div>
       </div>
-    </div>
+    </section>
 
     <!-- 6. 序の続き / 装画 -->
-    <div class="page paper">
+    <div class="page paper decorative-page">
       <div class="page-inner">
         <div class="decoration">
           <div class="deco-frame">
@@ -140,66 +185,60 @@
     </div>
 
     <!-- 7. 作品（左） -->
-    <div class="page paper" data-chapter="作品">
+    <section id="works" class="page paper" data-chapter="作品" tabindex="-1">
       <div class="page-inner">
         <div class="page-eyebrow">WORKS — 第一綴</div>
         <h2 class="page-h2"><span class="ink-target" data-ink="作品">作品</span></h2>
-        <p class="prose-small">課題設定から実装、可視化、発表まで手を動かして形にしたもの。</p>
-        <article class="case-card case-card-feature">
+        <p class="prose-small">課題設定からデータ設計、実装、可視化、検証設計まで手を動かして形にしたもの。</p>
+        <article id="case-01" class="case-card case-card-feature">
           <div class="case-no">CASE No.01</div><span class="case-stamp">PRESENTED</span>
           <h3 class="case-title">SNS体調変化分析アプリ「TwiAnalyzer」</h3>
-          <p class="case-desc">SNS投稿を日常の主観的健康データとして扱い、体調・気分の変化を分析するプロトタイプを開発。問診表では拾いにくい言葉の揺れや投稿傾向を、時系列で把握できる形にした。</p>
-          <ul class="case-points">
-            <li>投稿データの収集・整形・期間指定分析をPythonで実装。</li>
-            <li>投稿頻度、出現語、WordCloudを組み合わせ、変化を説明可能な形で可視化。</li>
-            <li>発表では背景、仮説、実装、限界、改善案まで一連の流れを整理。</li>
-          </ul>
+          <p class="case-desc">SNS投稿を日常の主観的健康データとして扱い、体調・気分の変化を時系列で把握するプロトタイプを開発。</p>
+          <dl class="case-facts">
+            <div><dt>課題</dt><dd>問診表だけでは拾いにくい言葉の揺れや投稿傾向を可視化する。</dd></div>
+            <div><dt>手法</dt><dd>投稿データの整形、期間指定分析、投稿頻度・出現語・WordCloudの組み合わせ。</dd></div>
+            <div><dt>担当</dt><dd>Pythonによる処理、可視化、発表資料での仮説・限界・改善案の整理。</dd></div>
+          </dl>
           <div class="case-tags"><span>Python</span><span>NLP</span><span>Visualization</span><span>Prototype</span></div>
           <a class="case-link" href="https://www.youtube.com/watch?v=lL-oo7Oajbs&amp;t=2442s" target="_blank" rel="noopener noreferrer">発表動画を見る</a>
         </article>
-        <div class="case-summary">
-          <span>強み</span>
-          <p>曖昧な問題を、データ処理・画面設計・説明資料まで落とし込む実装力。</p>
-        </div>
         <div class="page-folio">007</div>
       </div>
-    </div>
+    </section>
 
     <!-- 8. 作品（右） -->
-    <div class="page paper">
+    <section id="case-03" class="page paper">
       <div class="page-inner">
-        <article class="case-card case-card-compact">
-          <div class="case-no">CASE No.02</div><span class="case-stamp">CLOSED</span>
-          <h3 class="case-title">投稿頻度・単語変化の可視化</h3>
-          <p class="case-desc">キーワードと期間を指定し、通常時と対象期間の投稿頻度・出現語を比較。WordCloudと頻度差分により、体調不良前後の言語変化を見える化した。</p>
-          <div class="case-tags"><span>JSON</span><span>WordCloud</span><span>EDA</span></div>
+        <article class="case-card case-card-feature research-case">
+          <div class="case-no">CASE No.03</div><span class="case-stamp open">RESEARCH</span>
+          <h3 class="case-title">災害証言分析 / 後悔・反実仮想抽出</h3>
+          <p class="case-desc">宮城県土木部の東日本大震災職員証言を対象に、教訓の言語的痕跡を後悔・反実仮想表現として操作化し、再現可能な分析パイプラインを構築。</p>
+          <div class="research-metrics" aria-label="研究データの規模">
+            <div><strong>606</strong><span>証言</span></div>
+            <div><strong>12,250</strong><span>文</span></div>
+            <div><strong>33</strong><span>部署</span></div>
+            <div><strong>706</strong><span>抽出文</span></div>
+          </div>
+          <ul class="case-points">
+            <li>正規表現で証言境界を検出し、CSV/JSONLへ構造化。</li>
+            <li>後悔・反実仮想表現を5タイプに分類し、部署別・物語位置別に集計。</li>
+            <li>264文のブラインド人手検証とprecision/recall/Cohen's kappa算出枠組みを設計・実装。</li>
+            <li>LLM/RAGは実装済みではなく、構造化証言を根拠付き支援対話へつなぐ研究構想として設計中。</li>
+          </ul>
+          <div class="case-tags"><span>Python</span><span>pandas</span><span>Regex</span><span>JSONL</span><span>Evaluation</span></div>
+          <a class="case-link" href="https://www.pref.miyagi.jp/soshiki/jigyokanri/syokuinsyougen.html" target="_blank" rel="noopener noreferrer">宮城県公式資料を見る</a>
         </article>
-        <article class="case-card case-card-compact">
-          <div class="case-no">CASE No.03</div><span class="case-stamp open">OPEN</span>
-          <h3 class="case-title">災害体験談処理 / LLM・RAG</h3>
-          <p class="case-desc">東日本大震災の体験談を対象に、事実、認知、判断、心理状態のずれを構造化。被災直後の支援対話に使える検索拡張生成の基盤づくりを進めている。</p>
-          <div class="case-tags"><span>Data Cleaning</span><span>Python</span><span>RAG</span><span>LLM</span></div>
-        </article>
-        <article class="case-card case-card-mini">
-          <div class="case-no">CASE No.04</div><span class="case-stamp open">PUBLIC</span>
-          <h3 class="case-title">Java SkillBuilder 3D</h3>
-          <p class="case-desc">Javaの抽象概念を、歩ける3D教材として再構成した静的Webプロトタイプ。解説、操作デモ、クイズ、進捗保存を1つのHTMLにまとめた。</p>
-          <div class="case-tags"><span>Three.js</span><span>Java</span><span>Learning UX</span></div>
-          <a class="case-link" href="https://github.com/RyoTACHIWANA/java-skillbuilder-3d" target="_blank" rel="noopener noreferrer">GitHubで見る</a>
-        </article>
-        <article class="case-card case-card-mini">
-          <div class="case-no">CASE No.05</div><span class="case-stamp open">PUBLIC</span>
-          <h3 class="case-title">ARISE-REAL</h3>
-          <p class="case-desc">スマホ動画の姿勢推定とヘルスデータ設計を組み合わせ、実測ランクから翌日のトレーニング負荷を調整するRPG風プロトタイプ。</p>
-          <div class="case-tags"><span>Python</span><span>Flutter</span><span>Node.js</span></div>
-          <a class="case-link" href="https://github.com/RyoTACHIWANA/arise-real" target="_blank" rel="noopener noreferrer">GitHubで見る</a>
-        </article>
+        <div class="mini-work-grid" aria-label="その他の作品">
+          <article><span>CASE 02</span><p>投稿頻度・単語変化の比較可視化</p></article>
+          <article><span>CASE 04</span><p><a href="https://github.com/RyoTACHIWANA/java-skillbuilder-3d" target="_blank" rel="noopener noreferrer">Java SkillBuilder 3D</a></p></article>
+          <article><span>CASE 05</span><p><a href="https://github.com/RyoTACHIWANA/arise-real" target="_blank" rel="noopener noreferrer">ARISE-REAL</a></p></article>
+        </div>
         <div class="page-folio">008</div>
       </div>
-    </div>
+    </section>
 
     <!-- 9. 生い立ち（左） -->
-    <div class="page paper" data-chapter="生い立ち">
+    <section id="background" class="page paper" data-chapter="生い立ち">
       <div class="page-inner">
         <div class="page-eyebrow">BACKGROUND — 第二綴 第一章</div>
         <h2 class="page-h2"><span class="ink-target" data-ink="生い立ち">生い立ち</span></h2>
@@ -208,7 +247,7 @@
         <p class="prose">大学では情報工学と自然言語処理に出会い、いまは災害体験談に残る言葉から、人の心理や判断の揺れを読み解く研究を行っている。</p>
         <div class="page-folio">009</div>
       </div>
-    </div>
+    </section>
 
     <!-- 10. 生い立ち（右） -->
     <div class="page paper">
@@ -216,21 +255,24 @@
         <div class="timeline">
           <div class="tl-item"><span class="tl-year">2004</span><span class="tl-text">香川県に生まれる。活発で、まず自分の足で確かめる幼少期を過ごす。</span></div>
           <div class="tl-item"><span class="tl-year">2010s</span><span class="tl-text">辞書引きと読書に熱中。言葉を調べ、付箋を増やすことが、知識を集める楽しさにつながった。</span></div>
-          <div class="tl-item"><span class="tl-year">2016</span><span class="tl-text">中学受験をきっかけに親元を離れ、寮生活を始める。自分で考え、動く力と、一生涯の友人を得る。</span></div>
-          <div class="tl-item"><span class="tl-year">2022</span><span class="tl-text">地元に戻り、大学に入学。情報工学を学びながら、自然言語処理と研究の面白さに触れる。</span></div>
-          <div class="tl-item"><span class="tl-year">2026</span><span class="tl-text">より深い研究をするため、大学院に進学。災害体験談の分析とLLM/RAGの応用に取り組む。</span></div>
+          <div class="tl-item"><span class="tl-year">2016</span><span class="tl-text">中学受験をきっかけに親元を離れ、寮生活を始める。自分で考え、動く力を得る。</span></div>
+          <div class="tl-item"><span class="tl-year">2022</span><span class="tl-text">地元に戻り大学へ。情報工学を学びながら、自然言語処理と研究の面白さに触れる。</span></div>
+          <div class="tl-item"><span class="tl-year">2026</span><span class="tl-text">より深い研究をするため大学院へ。災害証言分析とLLM/RAG構想に取り組む。</span></div>
         </div>
         <div class="page-folio">010</div>
       </div>
     </div>
 
     <!-- 11. 読書と言葉（左） -->
-    <div class="page paper" data-chapter="読書と言葉">
+    <section id="reading" class="page paper" data-chapter="読書と言葉">
       <div class="page-inner">
         <div class="page-eyebrow">READING — 第二綴 第二章</div>
         <h2 class="page-h2"><span class="ink-target" data-ink="読書と言葉">読書と言葉</span></h2>
         <figure class="dictionary-figure">
-          <img src="assets/hobbies/dictionary.jpeg" alt="付箋が大量についた辞書の写真">
+          <picture>
+            <source type="image/webp" srcset="assets/optimized/dictionary.webp">
+            <img src="assets/hobbies/dictionary.jpeg" alt="付箋が大量についた辞書の写真" width="1220" height="1242" loading="lazy" decoding="async">
+          </picture>
           <figcaption>調べた言葉に付箋をつけ続けた辞書。</figcaption>
         </figure>
         <p class="prose-small">関心の根は、言葉を調べる習慣と、物語を読み続けた時間にある。</p>
@@ -240,7 +282,7 @@
         </div>
         <div class="page-folio">011</div>
       </div>
-    </div>
+    </section>
 
     <!-- 12. 読書と言葉（右） -->
     <div class="page paper">
@@ -264,7 +306,7 @@
     </div>
 
     <!-- 13. 興味のある分野（左） -->
-    <div class="page paper" data-chapter="興味のある分野">
+    <section id="interests" class="page paper" data-chapter="興味のある分野">
       <div class="page-inner">
         <div class="page-eyebrow">INTERESTS — 第二綴 第三章</div>
         <h2 class="page-h2"><span class="ink-target" data-ink="興味のある分野">興味のある分野</span></h2>
@@ -283,7 +325,7 @@
         </div>
         <div class="page-folio">013</div>
       </div>
-    </div>
+    </section>
 
     <!-- 14. 興味のある分野（右） -->
     <div class="page paper">
@@ -292,7 +334,7 @@
           <article class="focus-card">
             <span>LLM / RAG</span>
             <h3>検索拡張生成</h3>
-            <p>収集した記録を、必要な場面で根拠とともに引き出せる支援対話システムへつなげたい。</p>
+            <p>構造化した証言を、根拠とともに引き出せる支援対話システムへつなげる構想を設計している。</p>
           </article>
           <article class="focus-card">
             <span>LANGUAGE</span>
@@ -300,7 +342,10 @@
             <p>英語に加え、ドイツ語を中心にスペイン語やタガログ語も学習中。言語ごとの表現差にも関心がある。</p>
             <div class="focus-proof">
               <span>Duolingo</span>
-              <img class="focus-proof-img" src="assets/Duolingo.png" alt="Duolingoで526日連続学習を記録している画面">
+              <picture>
+                <source type="image/webp" srcset="assets/optimized/Duolingo.webp">
+                <img class="focus-proof-img" src="assets/Duolingo.png" alt="Duolingoで526日連続学習を記録している画面" width="1300" height="694" loading="lazy" decoding="async">
+              </picture>
               <p>2022年3月から継続し、500日以上の連続学習を記録。</p>
             </div>
           </article>
@@ -308,21 +353,79 @@
         <div class="experience-link">
           <span>COMMUNICATION</span>
           <h3>接客アルバイトでの学び</h3>
-          <p>個人売上目標を追う中で、同じ商品でも伝え方や順序で印象が大きく変わることを実感。正しい情報を、相手に届く形で正確に伝える手段の重要性を学んだ。</p>
+          <p>同じ情報でも伝え方や順序で印象が変わることを実感。正しい情報を、相手に届く形で伝える手段の重要性を学んだ。</p>
         </div>
         <div class="page-folio">014</div>
       </div>
     </div>
 
-    <!-- 15. 趣味（左） -->
-    <div class="page paper" data-chapter="趣味">
+    <!-- 15. Skills（左） -->
+    <section id="skills" class="page paper" data-chapter="Skills">
       <div class="page-inner">
-        <div class="page-eyebrow">HOBBIES — 第二綴 第四章</div>
+        <div class="page-eyebrow">SKILLS — 第三綴</div>
+        <h2 class="page-h2"><span class="ink-target" data-ink="Skills">Skills</span></h2>
+        <p class="prose-small">研究・実装で実際に触れている技術を、使いどころごとに整理。</p>
+        <div class="skills-grid">
+          <article class="skill-card">
+            <span>DATA / NLP</span>
+            <h3>Python Research Pipeline</h3>
+            <p>Python、pandas、NumPy、正規表現、CSV/JSONL、pdfplumberでPDFから構造化コーパスを作る。</p>
+          </article>
+          <article class="skill-card">
+            <span>ANALYSIS</span>
+            <h3>Evaluation & Visualization</h3>
+            <p>matplotlib、WordCloud、層化サンプリング、precision/recall/Cohen's kappaの検証枠組み。</p>
+          </article>
+          <article class="skill-card">
+            <span>ML BASICS</span>
+            <h3>scikit-learn</h3>
+            <p>TF-IDF、KMeans、PCA、silhouetteなどを使い、結果が弱い時も限界として扱う。</p>
+          </article>
+        </div>
+        <div class="page-folio">015</div>
+      </div>
+    </section>
+
+    <!-- 16. Skills（右） -->
+    <div class="page paper">
+      <div class="page-inner">
+        <div class="skills-grid">
+          <article class="skill-card">
+            <span>FRONTEND</span>
+            <h3>HTML / CSS / JavaScript</h3>
+            <p>静的サイト、ページめくり体験、線形ビュー、アクセシビリティ、画像最適化を組み合わせる。</p>
+          </article>
+          <article class="skill-card">
+            <span>CREATIVE CODE</span>
+            <h3>Three.js / Java</h3>
+            <p>3D教材プロトタイプやJava学習UXなど、抽象概念を操作できる画面へ落とし込む。</p>
+          </article>
+          <article class="skill-card">
+            <span>DESIGNING</span>
+            <h3>LLM / RAG</h3>
+            <p>実装済み成果としてではなく、構造化証言を根拠付き支援へ接続する研究設計として扱う。</p>
+          </article>
+        </div>
+        <div class="skill-note">
+          <span>WORK STYLE</span>
+          <p>「作った」と「測った」を分け、未測定の数値は出さない。再現性と検証可能性を先に置く。</p>
+        </div>
+        <div class="page-folio">016</div>
+      </div>
+    </div>
+
+    <!-- 17. 趣味（左） -->
+    <section id="hobbies" class="page paper" data-chapter="趣味">
+      <div class="page-inner">
+        <div class="page-eyebrow">HOBBIES — 第四綴</div>
         <h2 class="page-h2"><span class="ink-target" data-ink="趣味">趣味</span></h2>
         <p class="prose hobby-lead">机に向かう時間と同じくらい、外へ出て体を動かす時間も大切にしている。</p>
         <div class="hobby-list">
           <article class="hobby-card">
-            <img class="hobby-photo" src="assets/hobbies/soccer.jpg" alt="芝生の上に置かれたサッカーボールとスパイクの写真">
+            <picture>
+              <source type="image/webp" srcset="assets/optimized/soccer.webp">
+              <img class="hobby-photo" src="assets/hobbies/soccer.jpg" alt="芝生の上に置かれたサッカーボールとスパイクの写真" width="369" height="434" loading="lazy" decoding="async">
+            </picture>
             <div class="hobby-body">
               <div class="hobby-kicker">FOOTBALL</div>
               <h3 class="hobby-title">サッカー</h3>
@@ -330,7 +433,10 @@
             </div>
           </article>
           <article class="hobby-card">
-            <img class="hobby-photo" src="assets/hobbies/travel.jpg" alt="地図とカメラを置いた旅の写真">
+            <picture>
+              <source type="image/webp" srcset="assets/optimized/travel.webp">
+              <img class="hobby-photo" src="assets/hobbies/travel.jpg" alt="地図とカメラを置いた旅の写真" width="2304" height="4096" loading="lazy" decoding="async">
+            </picture>
             <div class="hobby-body">
               <div class="hobby-kicker">TRAVEL</div>
               <h3 class="hobby-title">旅行</h3>
@@ -338,16 +444,19 @@
             </div>
           </article>
         </div>
-        <div class="page-folio">015</div>
+        <div class="page-folio">017</div>
       </div>
-    </div>
+    </section>
 
-    <!-- 16. 趣味（右） -->
+    <!-- 18. 趣味（右） -->
     <div class="page paper">
       <div class="page-inner">
         <div class="hobby-list hobby-list-right">
           <article class="hobby-card">
-            <img class="hobby-photo" src="assets/hobbies/ski.jpg" alt="雪山に置かれたスキー板とポールの写真">
+            <picture>
+              <source type="image/webp" srcset="assets/optimized/ski.webp">
+              <img class="hobby-photo" src="assets/hobbies/ski.jpg" alt="雪山に置かれたスキー板とポールの写真" width="5120" height="2368" loading="lazy" decoding="async">
+            </picture>
             <div class="hobby-body">
               <div class="hobby-kicker">SKI</div>
               <h3 class="hobby-title">スキー</h3>
@@ -355,11 +464,14 @@
             </div>
           </article>
           <article class="hobby-card">
-            <img class="hobby-photo" src="assets/hobbies/marathon.jpeg" alt="マラソン大会で走るランナーの足元の写真">
+            <picture>
+              <source type="image/webp" srcset="assets/optimized/marathon.webp">
+              <img class="hobby-photo" src="assets/hobbies/marathon.jpeg" alt="マラソン大会で走るランナーの足元の写真" width="450" height="800" loading="lazy" decoding="async">
+            </picture>
             <div class="hobby-body">
               <div class="hobby-kicker">RUNNING</div>
               <h3 class="hobby-title">ランニング</h3>
-              <p class="hobby-text">マラソン大会を目標に、日々の距離を少しずつ積み重ねる。香川マラソン完走の記録もここに残す。</p>
+              <p class="hobby-text">マラソン大会を目標に、日々の距離を少しずつ積み重ねる。</p>
             </div>
           </article>
         </div>
@@ -368,43 +480,47 @@
           <div class="hobby-tags">
             <span>水泳</span><span>テニス</span><span>美術館・博物館巡り</span><span>登山</span>
           </div>
-          <p>写真に残っていない活動も含め、体力づくりと気分転換を継続している。</p>
-        </div>
-        <div class="page-folio">016</div>
-      </div>
-    </div>
-
-    <!-- 17. 書簡（左） -->
-    <div class="page paper" data-chapter="書簡">
-      <div class="page-inner">
-        <div class="page-eyebrow">CORRESPONDENCE</div>
-        <h2 class="page-h2"><span class="ink-target" data-ink="書簡">書簡</span></h2>
-        <p class="prose">この記録を読んでくださり、感謝いたします。</p>
-        <p class="prose">仕事のご依頼、感想、同じ本を愛する者としての便りでも——どうぞ気軽に。</p>
-        <p class="prose">返事は、必ず差し上げます。</p>
-        <div class="page-folio">017</div>
-      </div>
-    </div>
-
-    <!-- 18. 書簡の続き（連絡先） -->
-    <div class="page paper">
-      <div class="page-inner">
-        <div class="contact-block">
-          <div class="contact-date">2026年　5月　31日　最終更新</div>
-          <div class="contact-sign">敬具　——　立和名遼</div>
-          <div class="contact-links">
-            <a href="mailto:tachiwanariyo@gmail.com">電子書簡（Email）</a>
-            <a href="https://github.com/RyoTACHIWANA/">GitHub ※未整備</a>
-          </div>
+          <p>体力づくりと気分転換を継続している。</p>
         </div>
         <div class="page-folio">018</div>
       </div>
     </div>
 
-    <!-- 19. 裏見返し -->
+    <!-- 19. 書簡（左） -->
+    <section id="contact" class="page paper" data-chapter="書簡">
+      <div class="page-inner">
+        <div class="page-eyebrow">CORRESPONDENCE</div>
+        <h2 class="page-h2"><span class="ink-target" data-ink="書簡">書簡</span></h2>
+        <p class="prose">研究・実装・自然言語処理の話、または作品をご覧いただいた感想など、お気軽にご連絡ください。</p>
+        <p class="prose">公開できるコードや資料は、整い次第GitHubから辿れる形で追加していきます。</p>
+        <div class="contact-cta">
+          <a href="mailto:tachiwanariyo@gmail.com">Email</a>
+          <a href="https://github.com/RyoTACHIWANA/" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+        <div class="page-folio">019</div>
+      </div>
+    </section>
+
+    <!-- 20. 書簡の続き（連絡先） -->
+    <div class="page paper">
+      <div class="page-inner">
+        <div class="contact-block">
+          <div class="contact-date">2026年　6月　14日　最終更新</div>
+          <div class="contact-sign">敬具　——　立和名遼</div>
+          <div class="contact-links">
+            <a href="mailto:tachiwanariyo@gmail.com">tachiwanariyo@gmail.com</a>
+            <a href="https://github.com/RyoTACHIWANA/" target="_blank" rel="noopener noreferrer">github.com/RyoTACHIWANA</a>
+            <a href="?view=linear#works">一気に読む</a>
+          </div>
+        </div>
+        <div class="page-folio">020</div>
+      </div>
+    </div>
+
+    <!-- 21. 裏見返し -->
     <div class="hard endpaper"><div class="endpaper-inner"></div></div>
 
-    <!-- 20. 裏表紙 -->
+    <!-- 22. 裏表紙 -->
     <div class="hard cover-back">
       <div class="leather">
         <div class="leather-noise"></div>
@@ -419,7 +535,6 @@
 <!-- 全体に乗るグレイン -->
 <div class="grain-layer" aria-hidden="true"><div class="grain-fill"></div></div>
 
-<!-- スクリプト -->
 <script src="js/jquery.min.js"></script>
 <script src="js/turn.min.js"></script>
 <script src="audio-engine.js"></script>

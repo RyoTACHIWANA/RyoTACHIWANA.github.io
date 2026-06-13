@@ -1,76 +1,59 @@
-# 文豪探偵録 — ポートフォリオ
+# 文豪探偵録 — Ryo TACHIWANA Portfolio
 
-革表紙の手帳をめくる体験で，作品・手記・書簡をひとつの本として読める1ページ構成のポートフォリオです．
+革表紙の手帳をめくる体験で読む、日本語NLP/災害証言分析ポートフォリオです。通常表示では turn.js のページめくりを使い、`?view=linear` では採用担当者向けに縦スクロールで素早く読めます。
 
 ## 構成
 
-- `index.html` — すべてのコンテンツが入った単一ページ
-- `style.css` — スタイル
-- `script.js` — turn.js初期化と章ジャンプ
-- `audio-engine.js` — 音の合成と再生
-- `js/jquery.min.js`, `js/turn.min.js` — ページめくりライブラリ
-- `audio/` — 音素材を置く場所（差し替え可能）
+- `index.html` — 全コンテンツ、SEO/OGP/JSON-LD、線形ビュー用アンカー
+- `style.css` — 手帳表示、線形/no-JSフォールバック、レスポンシブ、a11y
+- `script.js` — turn.js初期化、目次ジャンプ、線形ビュー切替、音/ヘルプ制御
+- `audio-engine.js` — Web Audio API 合成音とMP3フォールバック
+- `assets/optimized/` — WebP化した表示用画像
+- `assets/og-cover.jpg` — SNS共有用OGP画像
+- `js/jquery.min.js`, `js/turn.min.js` — ページめくり用ライブラリ
 
-## 起動
+## ローカル確認
 
-ファイルを開くだけ．turn.jsとjQueryはローカルに同梱しているのでネット接続なしでも動きます．フォントだけはGoogle Fontsを参照するので，読み込めない環境では游明朝などにフォールバックします．
+```bash
+python3 -m http.server 8000
+```
 
-公開する場合はフォルダごと Netlify／Vercel／GitHub Pages にアップロードしてください．
+通常表示:
 
-## 中身の書き換え
+```txt
+http://localhost:8000/
+```
 
-すべて `index.html` の中にあります．探しやすいよう各見開きに `<!-- N. 章名 -->` のコメントを入れてあります．
+速読表示:
 
-- 表紙のタイトル → `class="cover-title"` の中身
-- 序文 → `<!-- 5. 序（左） -->` のページ内
-- 作品 → `<!-- 7. 作品（左） -->` 以降の `case-card` 要素
-- 生い立ち／愛読書／時代 → 各章のページ
-- 連絡先 → `<!-- 16. 書簡の続き -->` の `contact-links` のURL
+```txt
+http://localhost:8000/?view=linear#works
+```
 
-## 音素材の差し替え
+## 内容編集の目印
 
-デフォルトでは Web Audio API で合成した音が鳴ります（紙のシャッ・革のきしみ・インクの滴・スタンプの打音）．軽量ですが質感はそこそこです．
+- 代表作: `#case-01`, `#case-03`
+- 技術スタック: `#skills`
+- 連絡先: `#contact`
+- 公開URL: `index.html` 内の `canonical`, `og:url`, `twitter:image`
 
-`audio/` フォルダに以下のファイル名でMP3を置くと自動的にそちらが優先再生されます：
+成果数値は、公開可能な一次情報で確認できるものだけを書いています。未測定の精度、未実装のRAG、未提供のCV/外部リンクは追加していません。
 
-| ファイル名             | 鳴るタイミング                       |
-|------------------------|--------------------------------------|
-| `audio/page-turn.mp3`  | ページがめくられるとき               |
-| `audio/cover-open.mp3` | 表紙が初めて開かれるとき             |
-| `audio/ink-drop.mp3`   | 章タイトルでインクが滲むとき         |
-| `audio/stamp.mp3`      | 目次クリック・音ON時の確認音         |
+## 検証コマンド
 
-### おすすめのフリー素材サイト
+```bash
+npx lighthouse http://localhost:8000 --preset=desktop
+npx @axe-core/cli http://localhost:8000
+```
 
-いずれも商用・個人利用OK．クレジット表記の要否はライセンスによって違うので各サイトで確認してください．
+公開前に、ネガティブな整備状況の自己申告、作業用の仮文言、未確認数値、未実装機能を実装済みと読ませる表現が残っていないか全文検索してください。
 
-- **Freesound** ([freesound.org](https://freesound.org/))
-  CC0またはCC-BYで膨大な数の効果音．会員登録（無料）が必要．
-  検索キーワード例：`page turn`, `book open`, `paper rustle`, `ink drop`, `stamp`, `leather creak`
-- **Mixkit** ([mixkit.co/free-sound-effects/](https://mixkit.co/free-sound-effects/))
-  登録不要．Mixkitライセンスで無料利用可．
-- **Pixabay Sound Effects** ([pixabay.com/sound-effects/](https://pixabay.com/sound-effects/))
-  登録不要．Pixabayライセンスで商用無料．
-- **Zapsplat** ([zapsplat.com](https://www.zapsplat.com/))
-  会員登録（無料）でクレジット表記ありの利用可．
+## 依存について
 
-ダウンロードしたMP3を上記の名前にリネームして `audio/` に置けば反映されます．長さは1秒以内のものを選ぶと違和感が少ないです．
-
-## 操作方法
-
-- 本の **角をマウスでドラッグ** で物理的にページをめくる
-- **角をクリック** でも1ページずつめくれる
-- **目次の項目をクリック** で該当章まで自動的に連続めくり
-- **キーボードの← →** で前後に移動
-- 右上の **♪ ボタン** で効果音のON／OFF（デフォルトOFF）
-- 右上の **? ボタン** で操作ヘルプ
-
-## 動作確認済み
-
-Chrome／Safari／Firefox／Edgeの最新版．iOS Safari／Android Chromeでもタッチでめくれます．
+ページめくり体験は既存の turn.js を維持しています。jQuery 3.7.1への差し替えは表示確認までは通りましたが、モバイルPerformanceが安定しなかったため、今回は既存の1.12.4に戻しています。将来的な撤去や軽量実装への置換は別タスクです。
 
 ## クレジット
 
-- ページめくり：[turn.js](http://turnjs.com/) (BSD License) by Emmanuel García
+- ページめくり: turn.js (BSD License) by Emmanuel Garcia
 - jQuery 1.12.4 (MIT License)
 - Fonts: Shippori Mincho, Special Elite (Google Fonts, SIL Open Font License)

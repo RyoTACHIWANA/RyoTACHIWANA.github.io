@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Ryo TACHIWANA portfolio icon">
+  <rect width="64" height="64" rx="12" fill="#3a2414"/>
+  <rect x="8" y="8" width="48" height="48" rx="4" fill="#4a2f1c" stroke="#c9aa78" stroke-width="2"/>
+  <path d="M18 18h28M18 46h28M18 18v28M46 18v28" fill="none" stroke="#e8c98a" stroke-width="1.5"/>
+  <text x="32" y="38" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#e8c98a">R</text>
+</svg>
